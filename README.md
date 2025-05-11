@@ -1,6 +1,6 @@
 # AI Restaurants Suggester
 
-Lunch Advisor es una aplicación web moderna que ayuda a los usuarios a encontrar y recomendar lugares para almorzar. El proyecto está construido con una arquitectura moderna que separa el backend y frontend.
+AI Restaurants Suggester es una aplicación web moderna que ayuda a los usuarios a encontrar y recomendar lugares para almorzar. El proyecto está construido con una arquitectura moderna que separa el backend y frontend.
 
 ## 🏗️ Arquitectura
 

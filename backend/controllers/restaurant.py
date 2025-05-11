@@ -32,7 +32,7 @@ def get_recommended_restaurants(query: str) -> List[dict]:
     ids = gpt_restaurants_id_recomendations['ids']
     message = gpt_restaurants_id_recomendations['justification']
     restaurants = tools.filter_by_ids(ids)
-    print("restaurants", restaurants)
+    
     return {
         "message": message,
         "restaurants": restaurants
