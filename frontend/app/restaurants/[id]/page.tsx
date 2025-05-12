@@ -19,13 +19,13 @@ export default function RestaurantPage({ params }: { params: { id: string } }) {
       <header className="sticky top-0 z-10 border-b bg-background">
         <div className="container flex h-16 items-center px-4 sm:px-6 mx-auto">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold text-primary">DineReview</span>
+            <span className="text-xl font-bold text-primary">RecomendAI</span>
           </Link>
           <div className="ml-auto flex items-center gap-4">
-            <Button variant="ghost" size="sm">
+            {/* <Button variant="ghost" size="sm">
               Sign In
             </Button>
-            <Button size="sm">Sign Up</Button>
+            <Button size="sm">Sign Up</Button> */}
           </div>
         </div>
       </header>
