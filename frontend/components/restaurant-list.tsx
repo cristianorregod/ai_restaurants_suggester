@@ -1,21 +1,41 @@
+"use client";
+
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { restaurants } from "@/data/restaurants";
 import { getRandomImage } from "@/lib/utils";
 
-export default function RestaurantList() {
+interface Restaurant {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  price: string;
+  stars: number;
+  address: string;
+  phone: string;
+}
+
+export default function RestaurantList({ restaurants }: { restaurants: Restaurant[] }) {
+  const [images, setImages] = useState<string[]>(Array(restaurants.length).fill("/placeholder.svg"));
+
+  useEffect(() => {
+    const randomImages = restaurants.map(() => getRandomImage());
+    setImages(randomImages);
+  }, [restaurants.length]);
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {restaurants.map((restaurant) => (
+      {restaurants.map((restaurant, index) => (
         <Link key={restaurant.id} href={`/restaurants/${restaurant.id}`}>
           <Card className="overflow-hidden transition-all hover:shadow-md">
             <div className="aspect-video overflow-hidden">
               <Image
-                src={getRandomImage() || "/placeholder.svg"}
+                src={images[index]}
                 alt={restaurant.name}
                 width={500}
                 height={300}

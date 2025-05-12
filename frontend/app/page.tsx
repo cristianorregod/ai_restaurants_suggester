@@ -1,11 +1,11 @@
-import { Search } from "lucide-react";
+
 import Link from "next/link";
+import SearchSection from "@/components/search-section";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import RestaurantList from "@/components/restaurant-list";
 
-export default function Home() {
+
+export default async function Home() {
+  const data = await getRestaurants();
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 border-b bg-background">
@@ -22,27 +22,22 @@ export default function Home() {
         </div>
       </header>
       <main className="container px-4 py-6 sm:px-6 sm:py-8 mx-auto">
-        <div className="mb-8 space-y-4">
-          <h1 className="text-3xl font-bold tracking-tight">
-            Encuentra el mejor restaurante según tu preferencia
-          </h1>
-          <p className="text-muted-foreground">
-            Descubre restaurantes mejor posicionados, lee reviews, y encuentra
-            tu próximo lugar favorito para comer.
-            <br />
-            Todo asistido por tu amiga la Inteligencia Artificial.
-          </p>
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Escribe aquí lo que quieres buscar..."
-              className="pl-10"
-            />
-          </div>
-        </div>
-        <RestaurantList />
+        <SearchSection initialRestaurants={data.restaurants} />
       </main>
     </div>
   );
+}
+
+async function getRestaurants() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
+  const res = await fetch(`${apiUrl}/restaurants`, {
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch restaurants data');
+  }
+
+  return res.json();
 }
