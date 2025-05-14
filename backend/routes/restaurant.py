@@ -7,6 +7,10 @@ router = APIRouter()
 def get_restaurants():
     return restaurant_controller.get_all_restaurants()
 
+@router.get("/restaurants/{restaurant_id}")
+def get_restaurant_by_id(restaurant_id: int):
+    return restaurant_controller.get_restaurant_by_id(restaurant_id)
+
 @router.post("/restaurants/recommend")
 def recommend_restaurants(body: dict = Body(...)):
     query = body.get("query")
