@@ -6,13 +6,26 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { restaurants } from "@/data/restaurants";
 import { getRandomDate, getRandomImage } from "@/lib/utils";
+import { Restaurant } from "@/types";
 
-export default function RestaurantPage({ params }: { params: { id: string } }) {
-  // In a real app, you would fetch this data from an API
-  const restaurant =
-    restaurants.find((r) => r.id === Number(params.id)) || restaurants[0];
+async function getRestaurant(id: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/restaurants/${id}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch restaurant');
+  }
+
+  const data = await res.json();
+  const restaurant = data.restaurant;
+  if (!restaurant) {
+    throw new Error('Restaurant not found');
+  }
+
+  return restaurant;
+}
+
+export default async function RestaurantPage({ params }: { params: { id: string } }) {
+  const restaurant: Restaurant = await getRestaurant(params.id);
 
   return (
     <div className="min-h-screen bg-background">
