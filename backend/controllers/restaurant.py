@@ -19,6 +19,19 @@ def get_all_restaurants():
         "restaurants": restaurants
     }
 
+def get_restaurant_by_id(restaurant_id: int):
+    df = tools.load_dataset()
+    restaurant = df[df['id'] == restaurant_id]
+    print("restaurant", restaurant)
+    
+    if restaurant.empty:
+        raise HTTPException(status_code=404, detail="Restaurante no encontrado")
+    
+    return {
+        "message": "Restaurante obtenido con éxito",
+        "restaurant": restaurant.iloc[0].to_dict()
+    }
+
 def get_recommended_restaurants(query: str) -> List[dict]:
     df = tools.get_categories_for_recomendations()
     gpt_restaurants_id_recomendations = generate_restaurants_recomendation(query, df)
